@@ -52,6 +52,23 @@ function showLoading() {
 // Show initial posts
 showPosts();
 
+// Filter posts by input
+function filterPosts(e) {
+  const term = e.target.value.toUpperCase();
+  const posts = document.querySelectorAll('.post');
+
+  posts.forEach(post => {
+    const title = post.querySelector('.post-title').innerText.toUpperCase();
+    const body = post.querySelector('.post-body').innerText.toUpperCase();
+
+    if (title.indexOf(term) > -1 || body.indexOf(term) > -1) { // It will search for the term and return the index of it if found, or -1 if not fount so we can filter using this
+      post.style.display = 'flex';
+    } else {
+      post.style.display = 'none';
+    }
+  })
+}
+
 // Event listeners
 window.addEventListener('scroll', () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -60,3 +77,5 @@ window.addEventListener('scroll', () => {
     showLoading();
   }
 });
+
+filter.addEventListener('input', filterPosts);
